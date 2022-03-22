@@ -23,7 +23,7 @@ import okhttp3.Response;
 
 public class Iteration {
 
-    String URL = "http://192.168.0.8:8080/ProgettoIUm2_war_exploded/";                                                         //cardo
+    String URL = "http://192.168.0.8:8080/ProgettoIUM_war_exploded/";                                                         //cardo
     //      conn = (HttpURLConnection) new URL("http://192.168.42.77:8080/ProgettoIUm2_war_exploded/"+url).openConnection();   //nik
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
     OkHttpClient client=new OkHttpClient();
