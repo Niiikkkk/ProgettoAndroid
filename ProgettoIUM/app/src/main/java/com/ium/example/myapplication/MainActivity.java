@@ -2,16 +2,13 @@ package com.ium.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.ium.example.progetto.Iteration;
-import com.ium.example.progetto.Utente;
+import com.ium.example.progetto.IterationLogin;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,20 +29,9 @@ public class MainActivity extends AppCompatActivity {
                     txtError.setText("Username and Password required");
                     return;
                 }else {
-                    new Thread(){
-                        @Override
-                        public void run() {
-                            Iteration i = new Iteration();
-                            String loginJson = i.login("servletLogin", "logintype=login&loginAccount=" + editTextUsername.getText() + "&password=" + editTextPassword.getText());
-                            System.out.println(loginJson);
-                            Gson gson = new Gson();
-                            Utente u = gson.fromJson(loginJson, Utente.class);
-                            System.out.println(u);
-                            Intent intent = new Intent(view.getContext(), LoggedActivity.class);
-                            startActivity(intent);
-
-                       }
-                    }.start();
+                    String url = "servletLogin";
+                    String data = "logintype=login&loginAccount=" + editTextUsername.getText() + "&password=" + editTextPassword.getText();
+                    new IterationLogin(view.getContext(), editTextUsername, editTextPassword, txtError).execute(url,data);
                 }
             }
         });
