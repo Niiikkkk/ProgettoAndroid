@@ -2,8 +2,6 @@ package com.ium.example.progetto;
 
 import android.os.AsyncTask;
 
-import androidx.annotation.NonNull;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,40 +11,53 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-
 public class Iteration {
+    public HttpURLConnection getConnection(String url){
+        HttpURLConnection conn = null;
+        try {
+            conn = (HttpURLConnection) new URL("http://192.168.0.8:8080/ProgettoIUM_war_exploded/"+url).openConnection();
+            //      conn = (HttpURLConnection) new URL("http://192.168.42.77:8080/ProgettoIUm2_war_exploded/"+url).openConnection();   //nik
+            //Set request mode and request timeout information
+            conn.setRequestMethod("POST");
+            conn.setReadTimeout(5000);
+            conn.setConnectTimeout(5000);
+            //Set operation input and output:
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            //The post mode cannot be cached and needs to be manually set to false
+            conn.setUseCaches(false);
+            //Data we requested:
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return conn;
+    }
 
-    String URL = "http://192.168.0.8:8080/ProgettoIUM_war_exploded/";                                                         //cardo
-    //      conn = (HttpURLConnection) new URL("http://192.168.42.77:8080/ProgettoIUm2_war_exploded/"+url).openConnection();   //nik
-    public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-    OkHttpClient client=new OkHttpClient();
+    public String login(String url,String data){
+        try{
 
-    public String post(String url, String json) throws IOException {
-        String ritorno = null;
-        RequestBody body = RequestBody.create(json, JSON);
-        Request request = new Request.Builder()
-                .url(URL+url)
-                .post(body)
-                .build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                e.printStackTrace();
+            HttpURLConnection conn = getConnection(url);
+
+            //Get output stream
+            OutputStream out = conn.getOutputStream();
+            out.write(data.getBytes());
+            out.flush();
+            if (conn.getResponseCode() == 200) {
+                //Gets the input stream object of the response
+                InputStream is = conn.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                StringBuffer response = new StringBuffer();
+
+                String line=null;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                return response.toString();
             }
-
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                final String ritorno = response.body().string();
-            }
-        });
-
-        return ritorno;
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
