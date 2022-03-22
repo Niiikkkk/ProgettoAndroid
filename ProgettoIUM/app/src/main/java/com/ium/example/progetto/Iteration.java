@@ -16,7 +16,7 @@ public class Iteration {
         HttpURLConnection conn = null;
         try {
             conn = (HttpURLConnection) new URL("http://192.168.0.8:8080/ProgettoIUM_war_exploded/"+url).openConnection();             //cardo
-            //        conn = (HttpURLConnection) new URL("http://192.168.42.77:8080/ProgettoIUm2_war_exploded/"+url).openConnection();   //nik
+            //        conn = (HttpURLConnection) new URL("http://192.168.42.77:8080/ProgettoIUm2_war_exploded/"+url).openConnection();     //nik
 
             //Set request mode and request timeout information
             conn.setRequestMethod("POST");

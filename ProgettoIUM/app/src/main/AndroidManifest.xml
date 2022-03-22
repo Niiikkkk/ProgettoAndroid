@@ -18,6 +18,10 @@
             android:exported="true"
             android:parentActivityName=".MainActivity"/>
         <activity
+            android:name=".Ripetizioni"
+            android:exported="true"
+            android:parentActivityName=".LoggedActivity"/>
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

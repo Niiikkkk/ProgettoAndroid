@@ -2,6 +2,7 @@ package com.ium.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -29,10 +30,10 @@ public class LoggedActivity extends AppCompatActivity {
     }
 
 
-
     public void VisualizzaRipetizioni(View view)
     {
-
+        Intent intent = new Intent(view.getContext(), Ripetizioni.class);
+        startActivity(intent);
     }
 
     public void VisualizzaMyRipetizioni(View view)
