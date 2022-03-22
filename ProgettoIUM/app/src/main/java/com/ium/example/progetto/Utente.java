@@ -1,8 +1,9 @@
 package com.ium.example.progetto;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Utente {
+public class Utente implements Serializable {
     private int idUtente;
     private String passw;
     private String ruolo;

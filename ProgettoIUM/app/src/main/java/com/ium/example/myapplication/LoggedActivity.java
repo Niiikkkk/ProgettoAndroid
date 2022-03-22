@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.ium.example.progetto.Iteration;
+import com.ium.example.progetto.Utente;
 
 public class LoggedActivity extends AppCompatActivity {
 
@@ -22,11 +23,16 @@ public class LoggedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logged);
-        Ripetizioni = findViewById(R.id.btnRipetizioni);
-        MyRipetizioni = findViewById(R.id.btnMyRipetizioni);
-        Logout = findViewById(R.id.btnLogout);
-        txtLogged = findViewById(R.id.txtViewLogged);
+        Ripetizioni = (Button) findViewById(R.id.btnRipetizioni);
+        MyRipetizioni = (Button) findViewById(R.id.btnMyRipetizioni);
+        Logout = (Button) findViewById(R.id.btnLogout);
+        txtLogged = (TextView) findViewById(R.id.txtViewLogged);
         i = new Iteration();
+        Bundle b = getIntent().getExtras();
+        Utente u = (Utente) b.getSerializable("user");
+        if(u != null){
+            txtLogged.setText("Logged as " + u.getNome() + " " + u.getCognome() + " as " + u.getRuolo());
+        }
     }
 
 
@@ -38,11 +44,17 @@ public class LoggedActivity extends AppCompatActivity {
 
     public void VisualizzaMyRipetizioni(View view)
     {
+        String url = "servletController";
+        String data = "??";    // vedere funzioni su intellij
+        i.MyRipetizioni(url);
 
     }
 
     public void Logout(View view)
     {
-
+        String url = "servletLogin";
+        String data = "logintype=logout";
+        i.logout(url,data);
+        finish();
     }
 }
